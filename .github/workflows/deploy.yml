@@ -33,41 +33,41 @@ jobs:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
         steps:
-            - name: '📥 checkout repository'
+            - name: 'Checkout repository'
               uses: actions/checkout@v3
               with:
                   fetch-depth: 0
 
-            - name: '🔄  Cache node_modules'
+            - name: 'Cache node_modules'
               uses: actions/cache@v4
               with:
                   path: ~/.npm
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: ${{ runner.os }}-node-
 
-            - name: '🔧  Setup NodeJS ${{ env.NODE_VERSION }}'
+            - name: 'Setup NodeJS ${{ env.NODE_VERSION }}'
               uses: actions/setup-node@v4
               with:
                   node-version: ${{ env.NODE_VERSION }}
                   cache: 'npm'
 
-            - name: '🔧 Install npm@latest'
+            - name: 'Install npm@latest'
               run: npm i -g npm@latest
 
-            - name: '🔧 Install dependencies'
+            - name: 'Install dependencies'
               run: npm install
 
-            - name: '🏗️ Build'
+            - name: 'Build'
               run: npm run build
 
-            - name: '🔧 Setup Pages'
+            - name: 'Setup Pages'
               uses: actions/configure-pages@v4
 
-            - name: '📦 Upload artifact'
-              uses: actions/upload-pages-artifact@v3
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v2
               with:
                   path: './dist'
 
-            - name: '🚀 Deploy to GitHub Pages'
+            - name: 'Deploy to GitHub Pages'
               id: deployment
               uses: actions/deploy-pages@v2
