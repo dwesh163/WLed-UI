@@ -35,21 +35,17 @@ jobs:
               with:
                   node-version: 20
                   cache: 'npm'
-            - name: Change directory to Web-page
-              run: cd Web-page
             - name: Install dependencies
-              working-directory: Web-page
               run: npm install
             - name: Build
-              working-directory: Web-page
               run: npm run build
             - name: Setup Pages
               uses: actions/configure-pages@v3
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v2
               with:
-                  # Upload dist directory from Web-page
-                  path: './Web-page/dist'
+                  # Upload dist repository
+                  path: './dist'
             - name: Deploy to GitHub Pages
               id: deployment
               uses: actions/deploy-pages@v2
