@@ -1,8 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+	darkMode: 'class', // or 'media' if you prefer
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				background: 'var(--color-background)',
+				foreground: 'var(--color-foreground)',
+				primary: 'var(--color-primary)',
+				'primary-foreground': 'var(--color-primary-foreground)',
+				'muted-foreground': 'var(--color-muted-foreground)',
+			},
+		},
 	},
+	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	plugins: [],
 };
