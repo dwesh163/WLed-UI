@@ -1,15 +1,15 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# deploy.yml
+name: Deploy to GitHub Pages
 
 on:
-    # Runs on pushes targeting the default branch
     push:
-        branches: ['main']
-
-    # Allows you to run this workflow manually from the Actions tab
+        branches:
+            - main
+    pull_request:
+        types: [synchronize]
     workflow_dispatch:
 
-# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+# Set the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
 permissions:
     contents: read
     pages: write
@@ -20,32 +20,54 @@ concurrency:
     group: 'pages'
     cancel-in-progress: true
 
+env:
+    NODE_VERSION: 20
+    GENERIC_LIBRARY: frontend/generic-library
+    BASE_URL: '/WLed-UI'
+
 jobs:
-    # Single deploy job since we're just deploying
     deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
-        runs-on: ubuntu-latest
         steps:
-            - name: Checkout
+            - name: '📥 checkout repository'
               uses: actions/checkout@v4
-            - name: Set up Node
+              with:
+                  fetch-depth: 0
+
+            - name: '🔄  Cache node_modules'
+              uses: actions/cache@v4
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: ${{ runner.os }}-node-
+
+            - name: '🔧  Setup NodeJS ${{ env.NODE_VERSION }}'
               uses: actions/setup-node@v4
               with:
-                  node-version: 20
+                  node-version: ${{ env.NODE_VERSION }}
                   cache: 'npm'
-            - name: Install dependencies
+
+            - name: '🔧 Install npm@latest'
+              run: npm i -g npm@latest
+
+            - name: '🔧 Install dependencies'
               run: npm install
-            - name: Build
+
+            - name: '🏗️ Build'
               run: npm run build
-            - name: Setup Pages
-              uses: actions/configure-pages@v3
-            - name: Upload artifact
-              uses: actions/upload-pages-artifact@v2
+
+            - name: '🔧 Setup Pages'
+              uses: actions/configure-pages@v4
+
+            - name: '📦 Upload artifact'
+              uses: actions/upload-pages-artifact@v4
               with:
-                  # Upload dist repository
                   path: './dist'
-            - name: Deploy to GitHub Pages
+
+            - name: '🚀 Deploy to GitHub Pages'
               id: deployment
               uses: actions/deploy-pages@v2
