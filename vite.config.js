@@ -7,5 +7,16 @@ export default defineConfig(({ command }) => {
 		base: '/WLed-UI/',
 	};
 
+	if (command !== 'serve') {
+		config.base = '/WLed-UI/';
+		config.build = {
+			rollupOptions: {
+				output: {
+					manualChunks: undefined,
+				},
+			},
+		};
+	}
+
 	return config;
 });
