@@ -1,26 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-    --color-background: #0a0a0a;
-    --color-foreground: #eaeaea;
-    --color-primary: #e6e6e6;
-    --color-primary-foreground: #000000;
-    --color-secondary: #262626;
-    --color-secondary-foreground: #d9d9d9;
-    --color-accent: #212121;
-    --color-accent-foreground: #ffffff;
-    --color-destructive: #ff3333;
-    --color-destructive-foreground: #fafafa;
-    --color-muted: #404040;
-    --color-muted-foreground: #d9d9d9;
-    --color-card: #1a1a1a;
-    --color-card-foreground: #e6e6e6;
-    --color-popover: #262626;
-    --color-popover-foreground: #d9d9d9;
-    --color-border: #333333;
-    --color-input: #333333;
-    --color-ring: #e6e6e6;
-    --radius: 0.5rem;
-}

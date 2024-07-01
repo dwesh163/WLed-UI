@@ -1,17 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-	darkMode: 'class', // or 'media' if you prefer
+const withMT = require('@material-tailwind/react/utils/withMT');
+
+module.exports = withMT({
+	content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
 	theme: {
-		extend: {
-			colors: {
-				background: 'var(--color-background)',
-				foreground: 'var(--color-foreground)',
-				primary: 'var(--color-primary)',
-				'primary-foreground': 'var(--color-primary-foreground)',
-				'muted-foreground': 'var(--color-muted-foreground)',
-			},
-		},
+		extend: {},
 	},
-	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	plugins: [],
-};
+});
