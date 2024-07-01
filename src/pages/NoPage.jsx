@@ -1,18 +1,22 @@
-const NoPage = () => {
+import React from 'react';
+import { Typography, Button } from '@material-tailwind/react';
+import { FlagIcon } from '@heroicons/react/24/solid';
+import { Link } from 'react-router-dom';
+
+export default function NoPage() {
 	return (
-		<div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
-			<div className="mx-auto max-w-md text-center">
-				<div className="mx-auto h-12 w-12 text-primary"></div>
-				<h1 className="mt-4 text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">Oops! Page Not Found</h1>
-				<p className="mt-4 text-sm text-muted-foreground sm:text-base">The page you're looking for doesn't exist or has been moved. Please check the URL or go back to the homepage.</p>
-				<div className="mt-6">
-					<a className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-0.5" href="/">
-						Go to Homepage
-					</a>
-				</div>
+		<div className="h-screen mx-auto grid place-items-center text-center px-8">
+			<div>
+				<Typography variant="h1" color="blue-gray" className="mt-10 !text-3xl !leading-snug md:!text-4xl">
+					Error 404 <br /> This page cannot be found.
+				</Typography>
+				<Typography className="mt-8 mb-14 text-[18px] font-normal text-gray-500 mx-auto md:max-w-sm">Don&apos;t worry, our team is already on it.Please try refreshing the page or come back later.</Typography>
+				<Link to="/">
+					<Button color="gray" className="w-full px-4 md:w-[8rem]">
+						back home
+					</Button>
+				</Link>
 			</div>
 		</div>
 	);
-};
-
-export default NoPage;
+}

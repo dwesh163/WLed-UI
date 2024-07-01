@@ -2,3 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.glow {
+    filter: drop-shadow(0 0 10px #ff1d6c) drop-shadow(0 0 30px #ff1d6c) drop-shadow(0 0 50px #ff1d6c);
+    transition: filter 0.3s ease-in-out;
+}
