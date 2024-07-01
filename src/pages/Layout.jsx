@@ -38,7 +38,7 @@ function NavList({ onPower, power }) {
 function Layout() {
 	const [openNav, setOpenNav] = useState(false);
 	const [onPower, setOnPower] = useState(false);
-	const project = JSON.parse(localStorage.getItem('projects'))[sessionStorage.getItem('selectedProject')];
+	const project = localStorage.getItem('projects') ? JSON.parse(localStorage.getItem('projects'))[sessionStorage.getItem('selectedProject')] : {};
 
 	const handleWindowResize = () => {
 		if (window.innerWidth >= 960) {
