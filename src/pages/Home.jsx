@@ -18,7 +18,6 @@ export default function Home() {
 		});
 		if (response.ok) {
 			const data = await response.json();
-			setTimeout(() => setState(data), 500);
 		}
 	}
 
