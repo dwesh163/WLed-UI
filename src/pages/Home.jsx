@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { EffectList } from '../components/EffectList';
+import { PaletteList } from '../components/PaletteList';
 
 export default function Home() {
 	const [state, setState] = useState();
@@ -17,7 +18,7 @@ export default function Home() {
 		});
 		if (response.ok) {
 			const data = await response.json();
-			setState(data);
+			setTimeout(() => setState(data), 500);
 		}
 	}
 
@@ -39,7 +40,8 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div>
+		<div className="flex gap-2 justify-end mx-2">
+			<PaletteList state={state} updateState={updateState} />
 			<EffectList state={state} updateState={updateState} />
 		</div>
 	);

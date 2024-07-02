@@ -2,20 +2,20 @@ import { List, ListItem, Card, Typography, CardBody, Input } from '@material-tai
 import { useEffect, useState } from 'react';
 import convert from '../../lib/convert';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import gradient from '../assets/gradient.json';
 
-export function EffectList({ state, updateState }) {
+export function PaletteList({ state, updateState }) {
 	console.log(state, updateState);
-	const [effects, setEffects] = useState([]);
-	const [filteredEffects, setFilteredEffects] = useState([]);
-	const [effect, setEffect] = useState({});
-	const [selectedEffect, setSelectedEffect] = useState(0);
+	const [palettes, setPalettes] = useState([]);
+	const [filteredPalettes, setFilteredPalettes] = useState([]);
+	const [palette, setPalette] = useState({});
+	const [selectedPalette, setSelectedPalette] = useState(0);
 	const [searchQuery, setSearchQuery] = useState('');
 
 	useEffect(() => {
 		if (state != null && state != undefined && state['seg'] != undefined && state['seg'] != null && state['seg'].length != 0) {
-			console.log('ouiiii');
-			console.log(state['seg'][0]['fx']);
-			setSelectedEffect(state['seg'][0]['fx']);
+			console.log(state['seg'][0]['pal']);
+			setSelectedPalette(state['seg'][0]['pal']);
 		}
 	}, [state]);
 
@@ -26,68 +26,68 @@ export function EffectList({ state, updateState }) {
 	})();
 
 	useEffect(() => {
-		const fetchEffects = async () => {
+		const fetchPalettes = async () => {
 			try {
-				const response = await fetch(project.url + '/effects');
+				const response = await fetch(project.url + '/palettes');
 				const data = await response.json();
 
-				setEffects(data);
-				setFilteredEffects(data);
+				setPalettes(data);
+				setFilteredPalettes(data);
 			} catch (error) {
-				console.error('Error fetching effects:', error);
+				console.error('Error fetching palettes:', error);
 			}
 		};
 
 		if (project.url) {
-			fetchEffects();
+			fetchPalettes();
 		}
 	}, [project.url]);
 
 	useEffect(() => {
-		if (effects == null || effects == undefined || effects.length == 0) {
+		if (palettes == null || palettes == undefined || palettes.length == 0) {
 			return;
 		}
-		const effect = {
-			info: convert(effects[selectedEffect].info),
-			name: effects[selectedEffect].name,
-			id: selectedEffect,
+		const palette = {
+			name: palettes[selectedPalette].name,
+			id: selectedPalette,
 		};
-		setEffect(effect);
-		updateState({ seg: [{ fx: selectedEffect }] });
-	}, [selectedEffect, effects]);
+		setPalette(palette);
+		updateState({ seg: [{ pal: selectedPalette }] });
+	}, [selectedPalette, palettes]);
 
 	useEffect(() => {
 		if (searchQuery.trim() === '') {
-			setFilteredEffects(effects);
+			setFilteredPalettes(palettes);
 		} else {
-			const filtered = effects.filter((effect) => effect.name.toLowerCase().includes(searchQuery.toLowerCase()));
-			setFilteredEffects(filtered);
+			const filtered = palettes.filter((palette) => palette.name.toLowerCase().includes(searchQuery.toLowerCase()));
+			setFilteredPalettes(filtered);
 		}
-	}, [searchQuery, effects]);
+	}, [searchQuery, palettes]);
 
 	return (
 		<div className="flex flex-col gap-3">
 			<Card className="mt-6 w-96 h-52">
 				<CardBody className="p-4">
 					<Typography variant="h5" color="blue-gray" className="mb-2">
-						Effect : {effect.name}
+						Palette : {palette.name}
 					</Typography>
-					{JSON.stringify(effect)}
+					{JSON.stringify(palette)}
 				</CardBody>
 			</Card>
 			<Card className="w-96">
 				<Typography variant="h5" color="blue-gray" className="mx-4 my-2">
-					All effects
+					All palettes
 				</Typography>
 				<div className="mx-4 mb-4">
 					<Input label="Search" icon={<MagnifyingGlassIcon />} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
 				</div>
 				<div className="overflow-scroll h-[calc(100vh-430px)]">
-					<List className="">
-						{filteredEffects.map((effect, index) => (
-							<ListItem key={index} selected={effect.id == selectedEffect} onClick={() => setSelectedEffect(effect.id)}>
-								<span className="w-[13%] text-gray-500 select-none">#{effect.id}</span>
-								{effect.name}
+					<List className="flex gap-2">
+						{filteredPalettes.map((palette, index) => (
+							<ListItem key={index} selected={palette.id == selectedPalette} onClick={() => setSelectedPalette(palette.id)} className="relative">
+								<span className="w-[13%] text-gray-500 select-none">#{palette.id}</span>
+								{palette.name}
+								<div className="absolute bottom-0 left-0 w-full h-2 rounded-b-md" style={{ background: gradient[index] }}></div>
 							</ListItem>
 						))}
 					</List>
